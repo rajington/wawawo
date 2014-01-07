@@ -1,1 +1,45 @@
-Hello World
+<!doctype html>
+<html ng-app="wawawo">
+<head>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<link rel="stylesheet" type="text/css" href="wawawo.css">
+</head>
+<body ng-controller="Scoreboard">
+	<div ng-repeat="player in ['Raj', 'Aaron', 'Matt']" ng-click="increment(player)" class="{{player|lowercase}}">
+		<div class="vCenter">
+			{{player}}<br/>
+			<b>{{players[player]}}</b>
+		</div>
+	</div>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js"></script>
+	<script src="https://cdn.firebase.com/v0/firebase.js"></script>
+	<script src="https://cdn.firebase.com/libs/angularfire/0.5.0/angularfire.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/FitText.js/1.1/jquery.fittext.min.js"></script>
+	<script>
+	angular.module("wawawo", ["firebase"]).controller("Scoreboard", ["$scope", "$firebase",
+		function($scope, $firebase) {
+			var ref = new Firebase("https://wawawo.firebaseio.com");
+			$scope.players = $firebase(ref);
+			$scope.increment = function(player) {
+				var playerRef = ref.child(player);
+				playerRef.once('value', function(snapshot) {
+					playerRef.set(snapshot.val()+1);
+				});
+			}
+		}
+		]);
+	
+	$("body").fitText();
+
+	adjustLayout();
+	$(window).resize(adjustLayout);
+	function adjustLayout(){
+		$('.vCenter').css({
+			top: ($(window).height() - $('.vCenter').outerHeight())/2
+		});
+	}
+	</script>
+</body>
+</html>
