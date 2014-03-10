@@ -3,12 +3,13 @@ body {
     height:100%;
     position:fixed;
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 100px;
 }
 .raj,.matt,.aaron, .sharone {
 	float:left;
 	text-align: center;
-	width:25%;
-	height:100%;
+	width:50%;
+	height:50%;
 }
 .raj {
 	color: red;
@@ -24,6 +25,5 @@ body {
 }
 
 .vCenter {
-	position:absolute;
 	width: inherit;
 }
